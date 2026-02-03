@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0a0a1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Triple Moon Goddess</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/TripleMoonGoddess/tmg-assets/main/logo.jpg">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/TripleMoonGoddess/tmg-assets/main/logo.jpg">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 100%);
+      min-height: 100vh;
+      color: #e8e0ff;
+      padding: 20px;
+      padding-top: env(safe-area-inset-top, 20px);
+      padding-bottom: env(safe-area-inset-bottom, 20px);
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 16px;
+      margin-bottom: 12px;
+    }
+    
+    .title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #c9b8ff;
+    }
+    
+    .loading, .error {
+      text-align: center;
+      padding: 40px;
+      color: #888899;
+    }
+    
+    .error {
+      color: #ff6b6b;
+    }
+    
+    .section {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    
+    .section-header {
+      font-size: 10px;
+      font-weight: 700;
+      color: #666677;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    
+    .moon-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .moon-emoji {
+      font-size: 48px;
+    }
+    
+    .moon-info h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #e8e0ff;
+      margin-bottom: 4px;
+    }
+    
+    .moon-info p {
+      font-size: 14px;
+      color: #888899;
+    }
+    
+    .transit-item {
+      margin-bottom: 16px;
+    }
+    
+    .transit-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .transit-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    
+    .transit-planets {
+      font-size: 16px;
+      color: #aabbcc;
+    }
+    
+    .transit-days {
+      font-size: 14px;
+      font-weight: 600;
+      color: #4a9;
+    }
+    
+    .transit-details {
+      font-size: 12px;
+      color: #888899;
+    }
+    
+    .retro-item {
+      margin-bottom: 16px;
+    }
+    
+    .retro-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .retro-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    .retro-planet {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ff6b6b;
+    }
+    
+    .retro-direct {
+      text-align: right;
+    }
+    
+    .retro-date {
+      font-size: 14px;
+      color: #ffaa66;
+    }
+    
+    .retro-days {
+      font-size: 12px;
+      color: #ffaa66;
+    }
+    
+    .retro-affects {
+      font-size: 12px;
+      color: #888899;
+      margin-top: 4px;
+    }
+    
+    .no-retros {
+      color: #4a9;
+      font-size: 14px;
+    }
+    
+    .email-form {
+      text-align: center;
+    }
+    
+    .email-form input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #333344;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #e8e0ff;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    
+    .email-form input::placeholder {
+      color: #666677;
+    }
+    
+    .email-form button {
+      width: 100%;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #c9b8ff 0%, #8b7acc 100%);
+      color: #0a0a1a;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    .email-form button:active {
+      transform: scale(0.98);
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #333344;
+    }
+    
+    .footer a {
+      color: #c9b8ff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    
+    .chart-link {
+      display: block;
+      text-align: center;
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(201, 184, 255, 0.1);
+      border-radius: 12px;
+      color: #c9b8ff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    
+    .install-prompt {
+      background: linear-gradient(135deg, #1a1a2e 0%, #2a2a4e 100%);
+      border: 1px solid #333344;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    
+    .install-prompt h3 {
+      font-size: 16px;
+      color: #c9b8ff;
+      margin-bottom: 8px;
+    }
+    
+    .install-prompt p {
+      font-size: 13px;
+      color: #888899;
+      line-height: 1.5;
+    }
+    
+    .install-prompt .dismiss {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #666677;
+      cursor: pointer;
+    }
+    
+    .updated {
+      text-align: center;
+      font-size: 11px;
+      color: #666677;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://raw.githubusercontent.com/TripleMoonGoddess/tmg-assets/main/logo.jpg" alt="Triple Moon Goddess" class="logo">
+      <div class="title">Triple Moon Goddess</div>
+    </div>
+    
+    <div id="install-prompt" class="install-prompt" style="display: none;">
+      <h3>📱 Add to Home Screen</h3>
+      <p>Tap the menu button (⋮ or ⎙) and select<br>"Add to Home Screen" for quick access!</p>
+      <div class="dismiss" onclick="dismissInstall()">Got it</div>
+    </div>
+    
+    <div id="email-section" class="section">
+      <div class="section-header">Enter Your Email</div>
+      <div class="email-form">
+        <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email">
+        <button onclick="loadData()">View My Transits</button>
+      </div>
+      <p style="font-size: 12px; color: #666677; margin-top: 12px; text-align: center;">
+        Use the email from your natal chart
+      </p>
+    </div>
+    
+    <div id="content" style="display: none;">
+      <div id="moon-section" class="section">
+        <div class="section-header">Current Moon</div>
+        <div class="moon-section">
+          <span class="moon-emoji" id="moon-emoji">🌙</span>
+          <div class="moon-info">
+            <h2 id="moon-sign">Loading...</h2>
+            <p id="moon-phase">Loading...</p>
+          </div>
+        </div>
+      </div>
+      
+      <div id="transits-section" class="section">
+        <div class="section-header">Upcoming Transits</div>
+        <div id="transits-list"></div>
+      </div>
+      
+      <div id="retrogrades-section" class="section">
+        <div class="section-header">Personal Retrogrades</div>
+        <div id="retrogrades-list"></div>
+      </div>
+      
+      <a id="chart-link" class="chart-link" href="#">View Full Chart →</a>
+      
+      <div class="updated" id="updated"></div>
+    </div>
+    
+    <div id="loading" class="loading" style="display: none;">
+      <p>Loading your transits...</p>
+    </div>
+    
+    <div id="error" class="error" style="display: none;"></div>
+    
+    <div class="footer">
+      <a href="https://triplemoongoddess.com">triplemoongoddess.com</a>
+    </div>
+  </div>
+  
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzrixpvCg1yNeUtIEfvDLJb9JigcsC1MoQrXVyFDCI9krHakKEMcdzYZPlbt6NWqjE9/exec';
+    
+    // Check for saved email
+    const savedEmail = localStorage.getItem('tmg_email');
+    if (savedEmail) {
+      document.getElementById('email-input').value = savedEmail;
+      loadData();
+    }
+    
+    // Show install prompt for Android
+    if (/Android/i.test(navigator.userAgent) && !window.matchMedia('(display-mode: standalone)').matches) {
+      const dismissed = localStorage.getItem('tmg_install_dismissed');
+      if (!dismissed) {
+        document.getElementById('install-prompt').style.display = 'block';
+      }
+    }
+    
+    function dismissInstall() {
+      document.getElementById('install-prompt').style.display = 'none';
+      localStorage.setItem('tmg_install_dismissed', 'true');
+    }
+    
+    function getOrdinal(n) {
+      if (!n) return '';
+      const s = ['th', 'st', 'nd', 'rd'];
+      const v = n % 100;
+      return (s[(v - 20) % 10] || s[v] || s[0]);
+    }
+    
+    async function loadData() {
+      const email = document.getElementById('email-input').value.trim();
+      if (!email) {
+        showError('Please enter your email address');
+        return;
+      }
+      
+      // Save email
+      localStorage.setItem('tmg_email', email);
+      
+      // Show loading
+      document.getElementById('email-section').style.display = 'none';
+      document.getElementById('content').style.display = 'none';
+      document.getElementById('error').style.display = 'none';
+      document.getElementById('loading').style.display = 'block';
+      
+      try {
+        const response = await fetch(`${API_URL}?action=personal&email=${encodeURIComponent(email)}`);
+        const data = await response.json();
+        
+        if (data.error) {
+          showError(data.error);
+          document.getElementById('email-section').style.display = 'block';
+          return;
+        }
+        
+        renderData(data);
+      } catch (e) {
+        showError('Failed to load data. Please try again.');
+        document.getElementById('email-section').style.display = 'block';
+      }
+    }
+    
+    function showError(message) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('error').style.display = 'block';
+      document.getElementById('error').textContent = message;
+    }
+    
+    function renderData(data) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+      
+      // Moon
+      document.getElementById('moon-emoji').textContent = data.moon?.emoji || '🌙';
+      document.getElementById('moon-sign').textContent = `Moon in ${data.moon?.sign || 'Unknown'} ${data.moon?.degree || ''}°`;
+      document.getElementById('moon-phase').textContent = data.moon?.phase || '';
+      
+      // Transits
+      const transitsList = document.getElementById('transits-list');
+      if (data.transits?.length > 0) {
+        transitsList.innerHTML = data.transits.map(t => `
+          <div class="transit-item">
+            <div class="transit-header">
+              <span class="transit-planets">${t.transit} ☌ ${t.natal}</span>
+              <span class="transit-days">${t.daysUntil} days</span>
+            </div>
+            <div class="transit-details">
+              ${t.transit} in ${t.transitSign} (${t.transitHouse}${getOrdinal(t.transitHouse)}) → 
+              ${t.natal} in ${t.natalSign} (${t.natalHouse}${getOrdinal(t.natalHouse)})
+            </div>
+          </div>
+        `).join('');
+      } else {
+        transitsList.innerHTML = '<p style="color: #888899; font-size: 14px;">No major transits in the next 12 months</p>';
+      }
+      
+      // Retrogrades
+      const retrosList = document.getElementById('retrogrades-list');
+      const retros = data.retrogrades?.active || [];
+      if (retros.length > 0) {
+        retrosList.innerHTML = retros.map(r => `
+          <div class="retro-item">
+            <div class="retro-header">
+              <div>
+                <div class="retro-planet">${r.planet} Rx in ${r.sign}${r.house ? ` (${r.house}${getOrdinal(r.house)})` : ''}</div>
+                ${r.affects?.length > 0 ? `<div class="retro-affects">Affecting your ${r.affects.join(', ')}</div>` : ''}
+              </div>
+              <div class="retro-direct">
+                <div class="retro-date">${r.directDate}</div>
+                <div class="retro-days">${r.daysUntilDirect}d</div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        retrosList.innerHTML = '<p class="no-retros">No retrogrades affecting your chart ✨</p>';
+      }
+      
+      // Chart link
+      if (data.chartUrl) {
+        document.getElementById('chart-link').href = data.chartUrl;
+      }
+      
+      // Updated time
+      const updated = new Date(data.generated);
+      document.getElementById('updated').textContent = `Updated ${updated.toLocaleTimeString()}`;
+    }
+    
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>
