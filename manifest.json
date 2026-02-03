@@ -1,0 +1,21 @@
+{
+  "name": "Triple Moon Goddess",
+  "short_name": "TMG Widget",
+  "description": "Your personal astrology transits and retrogrades",
+  "start_url": "/widget",
+  "display": "standalone",
+  "background_color": "#0a0a1a",
+  "theme_color": "#0a0a1a",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/TripleMoonGoddess/tmg-assets/main/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/TripleMoonGoddess/tmg-assets/main/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
